@@ -27,7 +27,7 @@ public class Finals {
 
     public static void start() {
         System.out.println("Welcome to DigiVault!");
-        System.out.println("Program by: Yellow Group");
+        System.out.println("Program by: Yellow Group of BSITWMA-AW21");
         
         boolean loggedIn = false;
 
