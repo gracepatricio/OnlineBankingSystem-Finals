@@ -292,31 +292,59 @@ public class Finals {
     }
 
     private static void payBills() {
-        System.out.println("Available bill categories:");
-        System.out.println("1. Electricity");
-        System.out.println("2. Water");
-        System.out.println("3. Internet");
-        System.out.print("Enter bill category number: ");
-        int billCategory = scanner.nextInt();
-        scanner.nextLine(); // Consume leftover newline
+    // Available bill categories
+    System.out.println("Available bill categories:");
+    System.out.println("1. Electricity");
+    System.out.println("2. Water");
+    System.out.println("3. Internet");
+    System.out.print("Enter bill category number: ");
+    int billCategory = scanner.nextInt();
+    scanner.nextLine(); // Consume leftover newline
 
-        System.out.print("Enter bill amount: ");
-        double billAmount = scanner.nextDouble();
-        scanner.nextLine(); // Consume leftover newline
+    // Ask for the biller's name
+    System.out.print("Enter biller's name: ");
+    String billerName = scanner.nextLine();
 
-        if (billAmount <= 0) {
-            System.out.println("Invalid bill amount.");
-            return;
-        }
+    // Ask for the bill amount
+    System.out.print("Enter bill amount: ");
+    double billAmount = scanner.nextDouble();
+    scanner.nextLine(); // Consume leftover newline
 
-        if (billAmount > currentAccount.getBalance()) {
-            System.out.println("Insufficient funds to pay this bill.");
-            return;
-        }
+    if (billAmount <= 0) {
+        System.out.println("Invalid bill amount.");
+        return;
+    }
 
+    if (billAmount > currentAccount.getBalance()) {
+        System.out.println("Insufficient funds to pay this bill.");
+        return;
+    }
+
+    // Display bill payment preview
+    System.out.printf("\nBill Payment Preview:\nBiller Name: %s\nBill Category: %s\nBill Amount: %.2f\nCurrent Balance: %.2f\n",
+            billerName, getBillCategoryName(billCategory), billAmount, currentAccount.getBalance());
+
+    // Ask for confirmation before paying the bill
+    System.out.print("Confirm payment? (yes/no): ");
+    String confirmation = scanner.nextLine();
+
+    if (confirmation.equalsIgnoreCase("yes")) {
         currentAccount.withdraw(billAmount);
         System.out.println("Bill payment successful!");
+    } else {
+        System.out.println("Bill payment canceled.");
     }
+}
+
+// Helper method to get the bill category name
+private static String getBillCategoryName(int category) {
+    switch (category) {
+        case 1: return "Electricity";
+        case 2: return "Water";
+        case 3: return "Internet";
+        default: return "Unknown";
+    }
+}
 
     private static void showBalance() {
         System.out.println("Your current balance is: " + currentAccount.getBalance());
